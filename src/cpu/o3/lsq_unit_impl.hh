@@ -1008,6 +1008,19 @@ LSQUnit<Impl>::removeMSHR(InstSeqNum seqNum)
     }
 }*/
 
+// todo@ implement the two funtions below.
+template<class Impl>
+void
+LSQUnit<Impl>::updateForwardEntry(const DynInstPtr& storeInst)
+{
+}
+
+template<class Impl>
+void
+dataForward(DynInstPtr& loadInst)
+{
+}
+
 template <class Impl>
 void
 LSQUnit<Impl>::squash(const InstSeqNum &squashed_num)

@@ -383,6 +383,26 @@ class LSQUnit {
         bool isAllZeros;
     };
 
+   struct DataForwardEntry {
+       /** The struct for store to load data forwading entry. */
+       /** whether the entry is valid. */
+       bool valid;
+       /** Indicate which bytes are valid, one bit indicate 1 byte
+        * of data. eg: the lowest bit represent lowest byte of data
+        */
+       uint8_t bitEnable;
+       /** The ssn of the store which provide the data. */
+       storeSeqNum ssn;
+       /** The addr tag to judge if it gets a match. */
+       uint64_t tag;
+       /** The data to forward. */
+       uint8_t *data;
+   };
+
+   void updateForwardEntry(const DynInstPtr& storeInst);
+
+   void dataForward(DynInstPtr& loadInst);//need to change loadInst;
+
   private:
     /** The LSQUnit thread id. */
     ThreadID lsqID;
@@ -392,6 +412,9 @@ class LSQUnit {
 
     /** The load queue. */
     std::vector<DynInstPtr> loadQueue;
+
+    /** The store to load data forwarding struct. */
+    std::vector<std::vector<DataForwardEntry>> dataForwardStruct;
 
     /** The number of LQ entries, plus a sentinel entry (circular queue).
      *  @todo: Consider having var that records the true number of LQ entries.
